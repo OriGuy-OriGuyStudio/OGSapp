@@ -31,7 +31,8 @@
       "googleServicesFile": "./google-services.json"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
       [
@@ -44,7 +45,18 @@
       ],
       "expo-router",
       "@react-native-firebase/app",
-      "@react-native-firebase/auth"
+      "@react-native-firebase/auth",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Rubik-Regular.ttf",
+            "./assets/fonts/Rubik-Medium.ttf",
+            "./assets/fonts/Rubik-Bold.ttf",
+            "./assets/fonts/Rubik-black.ttf"
+          ]
+        }
+      ]
     ],
     "extra": {
       "router": {
