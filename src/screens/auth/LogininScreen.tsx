@@ -11,23 +11,29 @@ import {
   Alert,
 } from "react-native"
 import {
+  getClientById,
   signInWithPhoneNumber,
   verifyCode,
 } from "../../services/firestoreService"
 import { FirebaseAuthTypes } from "@react-native-firebase/auth"
-import { useAuth } from "../../context/AuthContext"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import { auth } from "../../config/firebaseConfig"
+import { useClient } from "../../context/ClientContext"
+import { Client } from "../../types/firestoreSchemas"
 
 interface Props {}
 
 function LogininScreen({}: Props) {
-  const [phoneNumber, setPhoneNumber] = useState<string>("")
-  const { setConfirm } = useAuth()
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
   const navigation = useNavigation()
   const router = useRouter()
-  const handleSendCode = async () => {
+  const { client, setClient } = useClient()
+  const handleLogin = async () => {
     try {
-      const confirmation = await signInWithPhoneNumber(phoneNumber)
-      setConfirm(confirmation) // שמירה ב-Context
+      const res = await signInWithEmailAndPassword(auth, email, password)
+      const client = await getClientById(res.user.uid)
+      setClient(client as Client)
       router.push("/OTPVerificationScreen")
     } catch (error) {
       Alert.alert("שגיאה", "אירעה שגיאה בשליחת הקוד.")
@@ -49,18 +55,31 @@ function LogininScreen({}: Props) {
         style={{ fontFamily: "Rubik-Bold" }}
         className="mt-8 mb-1 text-xl text-gray700"
       >
-        הזמן מספר טלפון
+        אימייל
       </Text>
       <TextInput
         keyboardType="phone-pad"
         keyboardAppearance="default"
-        onChangeText={setPhoneNumber}
-        value={phoneNumber}
+        onChangeText={setEmail}
+        value={email}
+        className="w-3/5 p-2 border-2 rounded-lg border-gray500"
+      />
+      <Text
+        style={{ fontFamily: "Rubik-Bold" }}
+        className="mt-8 mb-1 text-xl text-gray700"
+      >
+        סיסמא
+      </Text>
+      <TextInput
+        keyboardType="phone-pad"
+        keyboardAppearance="default"
+        onChangeText={setPassword}
+        value={password}
         className="w-3/5 p-2 border-2 rounded-lg border-gray500"
       />
       <Pressable
         className="flex-row items-center justify-center px-8 py-3 mt-4 bg-pink500 rounded-2xl"
-        onPress={handleSendCode}
+        onPress={handleLogin}
       >
         <Text
           style={{ fontFamily: "Rubik-Bold" }}
@@ -74,4 +93,3 @@ function LogininScreen({}: Props) {
 }
 
 export default LogininScreen
-
