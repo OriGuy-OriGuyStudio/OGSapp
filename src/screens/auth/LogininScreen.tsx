@@ -28,10 +28,12 @@ function LogininScreen({}: Props) {
     try {
       const res = await signInWithEmailAndPassword(auth, email, password)
       const client = await getClientById(res.user.uid)
+      console.log(client)
+
       setClient(client as Client)
-      router.push("/OTPVerificationScreen")
+      //   router.push("/OTPVerificationScreen")
     } catch (error) {
-      Alert.alert("שגיאה", "אירעה שגיאה בשליחת הקוד.")
+      Alert.alert("שגיאה", "שגיאה")
     }
   }
 
@@ -80,7 +82,7 @@ function LogininScreen({}: Props) {
           style={{ fontFamily: "Rubik-Bold" }}
           className="text-2xl text-center text-wy100"
         >
-          שלח קוד אימות
+          התחבר{" "}
         </Text>
       </Pressable>
     </KeyboardAvoidingView>
