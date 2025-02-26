@@ -10,12 +10,7 @@ import {
   Pressable,
   Alert,
 } from "react-native"
-import {
-  getClientById,
-  signInWithPhoneNumber,
-  verifyCode,
-} from "../../services/firestoreService"
-import { FirebaseAuthTypes } from "@react-native-firebase/auth"
+import { getClientById } from "../../services/firestoreService"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../../config/firebaseConfig"
 import { useClient } from "../../context/ClientContext"

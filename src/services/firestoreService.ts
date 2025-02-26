@@ -18,8 +18,7 @@ import {
   Project,
   Task,
 } from "../types/firestoreSchemas"
-import { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import auth from '@react-native-firebase/auth';
+
 //addNewClient, addNewProject, addNewTask, addNewMessage, addNewPayment
 export async function addNewClient(
   client: Omit<Client, "id" | "createdAt" | "updatedAt">
@@ -370,27 +369,6 @@ export async function updateTask(
     console.error("Error updating document: ", error)
   }
 }
-
-export const signInWithPhoneNumber = async (phoneNumber: string): Promise<FirebaseAuthTypes.ConfirmationResult> => {
-    try {
-      const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-      return confirmation;
-    } catch (error) {
-      console.error("Error sending verification code:", error);
-      throw error;
-    }
-  };
-  
-  // אימות הקוד שנשלח
-  export const verifyCode = async (confirmation: FirebaseAuthTypes.ConfirmationResult, code: string): Promise<void> => {
-    try {
-      await confirmation.confirm(code);
-      console.log("User signed in successfully!");
-    } catch (error) {
-      console.error("Invalid verification code:", error);
-      throw error;
-    }
-  };
 
 async function testFirestoreConnection() {
   try {
