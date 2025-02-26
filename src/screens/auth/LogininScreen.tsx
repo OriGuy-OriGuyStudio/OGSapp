@@ -15,6 +15,9 @@ import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../../config/firebaseConfig"
 import { useClient } from "../../context/ClientContext"
 import { Client } from "../../types/firestoreSchemas"
+import FloatingLabelInput from "../../components/FloatingLabelInput"
+import Colors from "../../constants/Colors"
+import WhatsAppLink from "../../components/WhatsappLink"
 
 interface Props {}
 
@@ -43,50 +46,78 @@ function LogininScreen({}: Props) {
     })
   }, [])
   return (
-    <KeyboardAvoidingView className="items-center justify-center flex-1 w-full align-middle bg-wy100">
+    <KeyboardAvoidingView style={styles.container}>
       <Image
         source={require("../../../assets/images/logo/appLogo.png")}
         style={{ width: 100, height: 100 }}
       />
-      <Text
-        style={{ fontFamily: "Rubik-Bold" }}
-        className="mt-8 mb-1 text-xl text-gray700"
-      >
-        אימייל
-      </Text>
-      <TextInput
-        keyboardType="phone-pad"
-        keyboardAppearance="default"
-        onChangeText={setEmail}
+      <View style={styles.headersContainer}>
+        <Text style={styles.h1}>ברוכים הבאים </Text>
+        <Text style={styles.h2}>זה הזמן להתחבר</Text>
+      </View>
+
+      <FloatingLabelInput
+        label={"אימייל"}
         value={email}
-        className="w-3/5 p-2 border-2 rounded-lg border-gray500"
+        onChangeText={setEmail}
       />
-      <Text
-        style={{ fontFamily: "Rubik-Bold" }}
-        className="mt-8 mb-1 text-xl text-gray700"
-      >
-        סיסמא
-      </Text>
-      <TextInput
-        keyboardType="phone-pad"
-        keyboardAppearance="default"
-        onChangeText={setPassword}
+
+      <FloatingLabelInput
+        label="סיסמא"
         value={password}
-        className="w-3/5 p-2 border-2 rounded-lg border-gray500"
+        onChangeText={setPassword}
+        secureTextEntry
       />
+
       <Pressable
         className="flex-row items-center justify-center px-8 py-3 mt-4 bg-pink500 rounded-2xl"
         onPress={handleLogin}
       >
         <Text
-          style={{ fontFamily: "Rubik-Bold" }}
+          style={{ fontFamily: "Rubik-Black" }}
           className="text-2xl text-center text-wy100"
         >
-          התחבר{" "}
+          התחבר
         </Text>
       </Pressable>
+      <WhatsAppLink />
     </KeyboardAvoidingView>
   )
 }
 
 export default LogininScreen
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.wy100,
+  },
+  headersContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  h1: {
+    fontSize: 32,
+    fontFamily: "Rubik-Black",
+    // marginBottom: 16,
+    marginTop: 16,
+    color: Colors.gray700,
+  },
+  h2: {
+    fontSize: 20,
+    fontFamily: "Rubik-Bold",
+    marginBottom: 16,
+    marginTop: -12,
+    color: Colors.gray700,
+  },
+  note: {
+    fontSize: 16,
+    fontFamily: "Rubik-Regular",
+    // marginBottom: 8,
+    marginTop: 16,
+    color: Colors.gray700,
+  },
+})
