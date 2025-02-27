@@ -6,6 +6,7 @@ import "../global.css"
 import { useClient } from "../src/context/ClientContext"
 import Dashboard from "./client"
 import { getAuth } from "firebase/auth"
+import Colors from "../src/constants/Colors"
 interface Props {}
 
 function Home({}: Props) {
@@ -29,6 +30,6 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: Colors.wy100,
   },
 })

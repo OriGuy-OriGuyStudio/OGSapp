@@ -33,12 +33,15 @@ function Layout({}: Props) {
           headerShown: true,
           headerStyle: {
             backgroundColor: Colors.purple500,
+        
           },
-          headerTintColor: Colors.pink500,
+          headerTintColor: Colors.wy100,
           headerTitleStyle: {
-            fontWeight: "bold",
-            fontFamily: "Rubik-Regular",
+            // fontWeight: "bold",
+            fontFamily: "Rubik-Black",
+            fontSize: 24,
           },
+          headerTitleAlign: "center",
           contentStyle: {
             width: "100%",
           },
