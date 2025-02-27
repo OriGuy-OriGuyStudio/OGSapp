@@ -11,13 +11,20 @@ import {
   Alert,
 } from "react-native"
 import { getClientById } from "../../services/firestoreService"
-import { signInWithEmailAndPassword } from "firebase/auth"
+import {
+  getAuth,
+  getReactNativePersistence,
+  setPersistence,
+  signInWithEmailAndPassword,
+} from "firebase/auth"
 import { auth } from "../../config/firebaseConfig"
 import { useClient } from "../../context/ClientContext"
 import { Client } from "../../types/firestoreSchemas"
 import FloatingLabelInput from "../../components/FloatingLabelInput"
 import Colors from "../../constants/Colors"
 import WhatsAppLink from "../../components/WhatsappLink"
+import { persistentLocalCache } from "firebase/firestore"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 interface Props {}
 
@@ -31,12 +38,11 @@ function LogininScreen({}: Props) {
     try {
       const res = await signInWithEmailAndPassword(auth, email, password)
       const client = await getClientById(res.user.uid)
-      console.log(client)
-
       setClient(client as Client)
       //   router.push("/OTPVerificationScreen")
     } catch (error) {
       Alert.alert("שגיאה", "שגיאה")
+      console.log(error)
     }
   }
 
