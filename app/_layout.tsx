@@ -6,6 +6,7 @@ import { useFonts } from "expo-font"
 import * as SplashScreen from "expo-splash-screen"
 import "../global.css"
 import { ClientProvider } from "../src/context/ClientContext"
+import Colors from "../src/constants/Colors"
 interface Props {}
 SplashScreen.preventAutoHideAsync()
 function Layout({}: Props) {
@@ -24,15 +25,16 @@ function Layout({}: Props) {
   if (!loaded && !error) {
     return null
   }
+
   return (
     <ClientProvider>
       <Stack
         screenOptions={{
           headerShown: true,
           headerStyle: {
-            backgroundColor: "#f4511e",
+            backgroundColor: Colors.purple500,
           },
-          headerTintColor: "#fff",
+          headerTintColor: Colors.pink500,
           headerTitleStyle: {
             fontWeight: "bold",
             fontFamily: "Rubik-Regular",

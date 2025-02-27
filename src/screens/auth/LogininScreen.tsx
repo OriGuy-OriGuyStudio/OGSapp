@@ -25,6 +25,8 @@ import Colors from "../../constants/Colors"
 import WhatsAppLink from "../../components/WhatsappLink"
 import { persistentLocalCache } from "firebase/firestore"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { FirebaseError } from "firebase/app"
+import { handleFirebaseError } from "../../util/firebaseUtils"
 
 interface Props {}
 
@@ -33,15 +35,20 @@ function LogininScreen({}: Props) {
   const [password, setPassword] = useState<string>("")
   const navigation = useNavigation()
   const router = useRouter()
-  const { client, setClient } = useClient()
+  const { setClient } = useClient()
   const handleLogin = async () => {
     try {
       const res = await signInWithEmailAndPassword(auth, email, password)
       const client = await getClientById(res.user.uid)
       setClient(client as Client)
-      //   router.push("/OTPVerificationScreen")
-    } catch (error) {
-      Alert.alert("שגיאה", "שגיאה")
+      router.replace("/client")
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        const errorMessage = handleFirebaseError(error)
+        Alert.alert("שגיאה", errorMessage)
+      } else {
+        Alert.alert("שגיאה", "שגיאה לא ידועה. נסה שוב מאוחר יותר.")
+      }
       console.log(error)
     }
   }

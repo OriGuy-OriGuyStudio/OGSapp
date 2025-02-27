@@ -1,14 +1,20 @@
 import { StatusBar } from "expo-status-bar"
-import React from "react"
+import React, { useEffect } from "react"
 import { StyleSheet, View } from "react-native"
 import LogininScreen from "../src/screens/auth/LogininScreen"
 import "../global.css"
+import { useClient } from "../src/context/ClientContext"
+import Dashboard from "./client"
+import { getAuth } from "firebase/auth"
 interface Props {}
 
 function Home({}: Props) {
+  const { client } = useClient()
+  const isAuth = getAuth()
+  useEffect(() => {}, [client])
   return (
     <View style={styles.container}>
-      <LogininScreen />
+      {isAuth.currentUser?.email ? <Dashboard /> : <LogininScreen />}
 
       <StatusBar style="auto" />
     </View>
