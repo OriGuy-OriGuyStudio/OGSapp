@@ -24,18 +24,17 @@ if (!getApps().length) {
 } else {
   app = getApp()
 }
-
 let auth
 try {
-  auth = getAuth(app)
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+  })
 } catch (error: unknown) {
   if (
     error instanceof FirebaseError &&
     error.code === "auth/already-initialized"
   ) {
-    auth = initializeAuth(app, {
-      persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-    })
+    auth = getAuth(app)
   } else {
     throw error
   }

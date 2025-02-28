@@ -323,6 +323,23 @@ export async function getPaymentById(paymentId: string) {
     return null
   }
 }
+export async function getProjectsByClientID(clientId: string): Promise<Project[]> {
+    try {
+      const projectsRef = collection(db, "projects");
+      const q = query(projectsRef, where("clientId", "==", clientId));
+      const querySnapshot = await getDocs(q);
+      
+      const projects: Project[] = [];
+      querySnapshot.forEach((doc) => {
+        projects.push({ id: doc.id, ...doc.data() } as Project);
+      });
+  
+      return projects;
+    } catch (error) {
+      console.error("Error fetching projects: ", error);
+      throw new Error("Failed to fetch projects");
+    }
+  }
 //updateClient, updateProject, updateTask
 export async function updateClient(
   clientId: string,
