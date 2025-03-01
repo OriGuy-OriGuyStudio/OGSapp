@@ -83,7 +83,9 @@ function Dashboard({}: Props) {
     navigation.setOptions({
       //   headerShown: true,
       // Set the header title with the client's name
-      header: () => <CustomHeader title={`שלום ${client?.name}  👋🏻`} />,
+      header: () => (
+        <CustomHeader title={`שלום ${client?.name}  👋🏻`} isDashboard={true} />
+      ),
     })
     handleGetAllProjectsByClientId()
   }, [client]) // Add client as a dependency to update the title when client changes
@@ -144,6 +146,7 @@ function Dashboard({}: Props) {
           switch (item.section.type) {
             case "פרוייקטים":
               return <ProjectDashboardPreview project={item.item as Project} />
+
             case "תשלומים":
               return (
                 <ProjectDashboardPaymentsPreview

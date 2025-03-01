@@ -1,20 +1,25 @@
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Pressable, StyleSheet, Text, View } from "react-native"
 import IconwithText from "../IconwithText"
 import Colors from "../../constants/Colors"
 import { Project } from "../../types/firestoreSchemas"
+import { useRouter } from "expo-router"
 
 interface Props {
   project: Project
 }
 
 function ProjectDashboardPreview({ project }: Props) {
+  const router = useRouter()
   return (
     <View style={styles.dataContainers}>
-      <Text style={styles.text}>
-        {project.name}{" "}
-        <Text style={styles.stageText}>(שלב נוכחי: {project.stage})</Text>
-      </Text>
+      <Pressable onPress={() => router.push(`/project/${project.id}`)}>
+        <Text style={styles.text}>
+          {project.name}{" "}
+          <Text style={styles.stageText}>(שלב נוכחי: {project.stage})</Text>
+        </Text>
+      </Pressable>
+
       <View style={styles.iconsContainer}>
         <IconwithText text={"העלה קובץ"} iconName={"add"} />
         <IconwithText text={"תשלומים"} iconName={"cash"} />
