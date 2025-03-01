@@ -1,19 +1,20 @@
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Pressable, StyleSheet, Text, View } from "react-native"
 import Ionicons from "@expo/vector-icons/Ionicons"
 import Colors from "../constants/Colors"
 
 interface Props {
   text: string
   iconName: keyof typeof Ionicons.glyphMap
+  onPress?: () => void
 }
 
-function IconwithText({ iconName, text }: Props) {
+function IconwithText({ iconName, text, onPress }: Props) {
   return (
-    <View style={styles.container}>
+    <Pressable onPress={onPress} style={styles.container}>
       <Ionicons name={iconName} size={32} color={Colors.pink500} />
       <Text style={styles.text}>{text}</Text>
-    </View>
+    </Pressable>
   )
 }
 

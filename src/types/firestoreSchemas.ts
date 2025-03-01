@@ -40,11 +40,11 @@ export interface Payment {
   projectId: string
   clientId: string
   depositAmount: number
-  despositStatus: "ממתין לתשלום" | "שולם" | "באיחור"
+  despositStatus: "ממתין לתשלום" | "שולם" | "באיחור" | "ממתין לסיום פרוייקט"
   despostDueDate: Timestamp
   despositInvoiceUrl: string
   fullfillAmount: number
-  fullfillStatus: "ממתין לתשלום" | "שולם" | "באיחור"
+  fullfillStatus: "ממתין לתשלום" | "שולם" | "באיחור" | "ממתין לסיום פרוייקט"
   fullfillDueDate: Timestamp
   fullfillInvoiceUrl: string
   totalPay: number

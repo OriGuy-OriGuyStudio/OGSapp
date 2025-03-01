@@ -50,6 +50,7 @@ function Dashboard({}: Props) {
   const { client, setClient, projects, setProjects, payments, setPayments } =
     useClient()
   const [loadingProjects, setLoadingProjects] = useState(true)
+  const [refresh, setRefresh] = useState(true)
   const [loadingPayments, setLoadingPayments] = useState(true)
   const DATA: DataSection[] = [
     {
@@ -91,6 +92,7 @@ function Dashboard({}: Props) {
     if (client) {
       handleGetAllProjectsByClientId()
       handleGetAllPaymentsByClientId()
+      setRefresh(false)
     }
   }, [])
 
@@ -125,15 +127,31 @@ function Dashboard({}: Props) {
       </View>
       <SectionList
         style={{ paddingBottom: 16 }}
+        refreshing={refresh}
+        onRefresh={() => {
+          setRefresh(true)
+          handleGetAllProjectsByClientId()
+          handleGetAllPaymentsByClientId()
+          setRefresh(false)
+        }}
         sections={DATA}
         keyExtractor={(item, index) => item.id + index}
-        renderItem={({ item }) => {
-          if (item as Project) {
-            return <ProjectDashboardPreview project={item as Project} />
-          } else if (item as Payment) {
-            return <ProjectDashboardPaymentsPreview payment={item as Payment} />
-          } else {
+        renderItem={(item) => {
+          if (!item || !item.section || !item.item) {
+            console.error("Invalid item:", item)
             return null
+          }
+          switch (item.section.type) {
+            case "פרוייקטים":
+              return <ProjectDashboardPreview project={item.item as Project} />
+            case "תשלומים":
+              return (
+                <ProjectDashboardPaymentsPreview
+                  payment={item.item as Payment}
+                />
+              )
+            default:
+              return null
           }
         }}
         renderSectionHeader={({ section: { title } }) => (
@@ -152,7 +170,7 @@ function Dashboard({}: Props) {
         }}
         ListFooterComponent={() => {
           return (
-            <View>
+            <View style={styles.chatButtonContainer}>
               <Text style={styles.sectionTitle}>מענה מהיר לשאלות תשובות</Text>
               <Pressable
                 onPress={() => router.push("/chat")}
@@ -182,6 +200,17 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingHorizontal: 24,
 
+    width: "100%",
+  },
+  chatButtonContainer: {
+    // justifyContent: "center",
+    // alignContent: "center",
+    // alignItems: "center",
+  },
+  paymentContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
     width: "100%",
   },
   sectionTitle: {

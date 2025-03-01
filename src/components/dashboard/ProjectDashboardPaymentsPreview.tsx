@@ -20,8 +20,26 @@ function ProjectDashboardPaymentsPreview({ payment }: Props) {
     }
     fetchProject()
   }, [payment.projectId])
-
-  return <View style={styles.dataContainers}></View>
+  const getStatusStyle = (status: string) => {
+    return status === "שולם" ? styles.greenText : styles.redText
+  }
+  return (
+    <View style={styles.dataContainers}>
+      <Text style={styles.projectName}>{project?.name}</Text>
+      <Text style={styles.text}>
+        מקדמה:{" "}
+        <Text style={getStatusStyle(payment.despositStatus)}>
+          {payment.despositStatus}
+        </Text>
+      </Text>
+      <Text style={styles.text}>
+        תשלום סופי:{" "}
+        <Text style={getStatusStyle(payment.fullfillStatus)}>
+          {payment.fullfillStatus}
+        </Text>
+      </Text>
+    </View>
+  )
 }
 
 export default ProjectDashboardPaymentsPreview
@@ -31,11 +49,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.wy100,
     paddingHorizontal: 24,
     paddingVertical: 16,
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    alignContent: "flex-start",
+    alignItems: "flex-start",
     borderRadius: 24,
-    width: "48%",
+    width: "100%",
     elevation: 4,
     shadowColor: Colors.wy700,
     shadowOffset: { width: 0, height: 2 },
@@ -62,10 +80,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   greenText: {
-    color: Colors.green700,
+    color: Colors.purple500,
+    fontFamily: "Rubik-Black",
   },
   redText: {
     color: Colors.red500,
+    fontFamily: "Rubik-Black",
   },
   additionalText: {
     fontSize: 16,

@@ -349,16 +349,15 @@ export async function getPaymentsByClientID(
     const paymentsRef = collection(db, "payments")
     const q = query(paymentsRef, where("clientId", "==", clientId))
     const querySnapshot = await getDocs(q)
-
-    const payments: Payment[] = []
+    const projects: Payment[] = []
     querySnapshot.forEach((doc) => {
-      payments.push({ id: doc.id, ...doc.data() } as Payment)
+      projects.push({ id: doc.id, ...doc.data() } as Payment)
     })
 
-    return payments
+    return projects
   } catch (error) {
-    console.error("Error fetching payments: ", error)
-    throw new Error("Failed to fetch payments")
+    console.error("Error fetching projects: ", error)
+    throw new Error("Failed to fetch projects")
   }
 }
 //updateClient, updateProject, updateTask
@@ -411,7 +410,6 @@ export async function updateTask(
 async function testFirestoreConnection() {
   try {
     const querySnapshot = await getDocs(collection(db, "customers"))
-    console.log(`🔹 Firestore connected, Found ${querySnapshot.size} documents`)
   } catch (error) {
     console.error("❌ Connention error to firestire:", error)
   }
