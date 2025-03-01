@@ -1,10 +1,12 @@
-import { useNavigation } from "expo-router"
+import { useNavigation, useRouter } from "expo-router"
 import { canGoBack } from "expo-router/build/global-state/routing"
 import { StatusBar } from "expo-status-bar"
 import React, { useEffect, useLayoutEffect, useState } from "react"
 import {
   ActivityIndicator,
+  Button,
   FlatList,
+  Pressable,
   SectionList,
   StyleSheet,
   Text,
@@ -43,6 +45,7 @@ interface DataSection {
 function Dashboard({}: Props) {
   // Get navigation object from expo-router
   const navigation = useNavigation()
+  const router = useRouter()
   // Get client and setClient from ClientContext
   const { client, setClient, projects, setProjects, payments, setPayments } =
     useClient()
@@ -129,8 +132,6 @@ function Dashboard({}: Props) {
             return <ProjectDashboardPreview project={item as Project} />
           } else if (item as Payment) {
             return <ProjectDashboardPaymentsPreview payment={item as Payment} />
-          } else if (item as Payment) {
-            return <ProjectDashboardPaymentsPreview payment={item as Payment} />
           } else {
             return null
           }
@@ -151,7 +152,15 @@ function Dashboard({}: Props) {
         }}
         ListFooterComponent={() => {
           return (
-            <Text style={styles.sectionTitle}>מענה מהיר לשאלות תשובות</Text>
+            <View>
+              <Text style={styles.sectionTitle}>מענה מהיר לשאלות תשובות</Text>
+              <Pressable
+                onPress={() => router.push("/chat")}
+                style={styles.openChatButton}
+              >
+                <Text style={styles.chatButtonText}>פתח צ'אט</Text>
+              </Pressable>
+            </View>
           )
         }}
       />
@@ -216,6 +225,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.red500,
     fontFamily: "Rubik-Bold",
+  },
+  openChatButton: {
+    width: "40%",
+    fontFamily: "Rubik-Black",
+    backgroundColor: Colors.pink500,
+    paddingVertical: 8,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    borderRadius: 24,
+    marginBottom: 24,
+  },
+  chatButtonText: {
+    fontSize: 16,
+    fontFamily: "Rubik-Black",
+    color: Colors.wy100,
   },
 })
 

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "472598237658",
+    "project_id": "ogsapp-c4b00",
+    "storage_bucket": "ogsapp-c4b00.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472598237658:android:d4f8c9bef195f5823ab0e3",
+        "android_client_info": {
+          "package_name": "com.origuystudio.ogsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "472598237658-nch616c88rta3vccre13v3t0d98ln5i2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.origuystudio.ogsapp",
+            "certificate_hash": "ee5b5a17811054a130e9afa9b144a15a444e4077"
+          }
+        },
+        {
+          "client_id": "472598237658-0977rpid5ncm9epi4ej4u4l5pr46eumo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEG8ICeoWlyO2xOOQw-h5J29pJcKUQyiA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "472598237658-0977rpid5ncm9epi4ej4u4l5pr46eumo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "472598237658-f5b6abogide93669es5tbsnte9ls2alu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.origuystudio.ogsapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

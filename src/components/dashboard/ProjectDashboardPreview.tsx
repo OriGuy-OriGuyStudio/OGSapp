@@ -12,7 +12,8 @@ function ProjectDashboardPreview({ project }: Props) {
   return (
     <View style={styles.dataContainers}>
       <Text style={styles.text}>
-        {project.name} <Text style={styles.stageText}>({project.stage})</Text>
+        {project.name}{" "}
+        <Text style={styles.stageText}>(שלב נוכחי: {project.stage})</Text>
       </Text>
       <View style={styles.iconsContainer}>
         <IconwithText text={"העלה קובץ"} iconName={"add"} />
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
   },
   stageText: {
     fontSize: 16,
-    color: Colors.pink500,
+    color: Colors.purple500,
     fontFamily: "Rubik-Medium",
   },
 })
