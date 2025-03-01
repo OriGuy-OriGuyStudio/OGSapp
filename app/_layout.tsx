@@ -7,6 +7,7 @@ import * as SplashScreen from "expo-splash-screen"
 import "../global.css"
 import { ClientProvider } from "../src/context/ClientContext"
 import Colors from "../src/constants/Colors"
+import CustomHeader from "../src/components/CustomHeader"
 interface Props {}
 SplashScreen.preventAutoHideAsync()
 function Layout({}: Props) {
@@ -29,23 +30,25 @@ function Layout({}: Props) {
   return (
     <ClientProvider>
       <Stack
-        screenOptions={{
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: Colors.purple500,
-        
-          },
-          headerTintColor: Colors.wy100,
-          headerTitleStyle: {
-            // fontWeight: "bold",
-            fontFamily: "Rubik-Black",
-            fontSize: 24,
-          },
-          headerTitleAlign: "center",
-          contentStyle: {
-            width: "100%",
-          },
-        }}
+        screenOptions={
+          {
+            header: () => <CustomHeader title={""} isDashboard={false} />
+            //   headerShown: true,
+            //   headerStyle: {
+            //     backgroundColor: Colors.purple500,
+            //   },
+            //   headerTintColor: Colors.wy100,
+            //   headerTitleStyle: {
+            //     // fontWeight: "bold",
+            //     fontFamily: "Rubik-Black",
+            //     fontSize: 24,
+            //   },
+            //   headerTitleAlign: "center",
+            //   contentStyle: {
+            //     width: "100%",
+            //   },
+          }
+        }
       ></Stack>
     </ClientProvider>
   )
