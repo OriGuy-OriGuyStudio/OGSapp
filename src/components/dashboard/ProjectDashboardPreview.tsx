@@ -2,15 +2,18 @@ import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import IconwithText from "../IconwithText"
 import Colors from "../../constants/Colors"
+import { Project } from "../../types/firestoreSchemas"
 
 interface Props {
-  projectName: string
+  project: Project
 }
 
-function ProjectDashboardPreview({ projectName }: Props) {
+function ProjectDashboardPreview({ project }: Props) {
   return (
     <View style={styles.dataContainers}>
-      <Text style={styles.text}>{projectName}</Text>
+      <Text style={styles.text}>
+        {project.name} <Text style={styles.stageText}>({project.stage})</Text>
+      </Text>
       <View style={styles.iconsContainer}>
         <IconwithText text={"העלה קובץ"} iconName={"add"} />
         <IconwithText text={"תשלומים"} iconName={"cash"} />
@@ -49,5 +52,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: Colors.gray700,
     fontFamily: "Rubik-Bold",
+  },
+  stageText: {
+    fontSize: 16,
+    color: Colors.pink500,
+    fontFamily: "Rubik-Medium",
   },
 })

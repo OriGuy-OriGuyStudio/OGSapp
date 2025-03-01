@@ -6,13 +6,9 @@ import Colors from "../../constants/Colors"
 
 interface Props {
   payment: Payment
-  secondPayment?: Payment
 }
 
-function ProjectDashboardPaymentsPreview({
-  payment,
-  secondPayment,
-}: Props) {
+function ProjectDashboardPaymentsPreview({ payment }: Props) {
   const [project, setProject] = useState<Project | null>(null)
 
   useEffect(() => {
@@ -25,37 +21,7 @@ function ProjectDashboardPaymentsPreview({
     fetchProject()
   }, [payment.projectId])
 
-  return (
-    <View style={styles.dataContainers}>
-      <Text style={styles.projectName}>{project?.name || "Loading..."}</Text>
-      <View style={styles.paymantContainer}>
-        <Text style={styles.label}>{payment.type}: </Text>
-        <Text
-          style={[
-            styles.text,
-            payment.status === "שולם" ? styles.greenText : styles.redText,
-          ]}
-        >
-          {payment.status}
-        </Text>
-      </View>
-      {secondPayment && (
-        <View style={styles.paymantContainer}>
-          <Text style={styles.label}>{secondPayment.type}: </Text>
-          <Text
-            style={[
-              styles.text,
-              secondPayment.status === "שולם"
-                ? styles.greenText
-                : styles.redText,
-            ]}
-          >
-            {secondPayment.status}
-          </Text>
-        </View>
-      )}
-    </View>
-  )
+  return <View style={styles.dataContainers}></View>
 }
 
 export default ProjectDashboardPaymentsPreview

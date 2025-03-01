@@ -30,12 +30,14 @@ import Colors from "../../src/constants/Colors"
 import IconwithText from "../../src/components/IconwithText"
 import ProjectDashboardPreview from "../../src/components/dashboard/ProjectDashboardPreview"
 import ProjectDashboardPaymentsPreview from "../../src/components/dashboard/ProjectDashboardPaymentsPreview"
+import RecommandedActions from "../../src/components/dashboard/RecommandedActions"
 
 // Define the Props interface (currently empty)
 interface Props {}
 interface DataSection {
   title: string
   data: FirestoreSchemaTypes[]
+  type: string
 }
 // Define the Dashboard component
 function Dashboard({}: Props) {
@@ -50,10 +52,12 @@ function Dashboard({}: Props) {
     {
       title: `הפרוייקטים של ${client?.name}`,
       data: projects.length <= 0 ? [] : projects,
+      type: "פרוייקטים",
     },
     {
       title: "סטטוס תשלומים שנותרו",
       data: payments.length <= 0 ? [] : payments,
+      type: "תשלומים",
     },
   ]
   // Get the authentication object from Firebase
@@ -83,15 +87,10 @@ function Dashboard({}: Props) {
   useEffect(() => {
     if (client) {
       handleGetAllProjectsByClientId()
-    }
-  }, [client])
-
-  // useEffect to fetch payments when the client changes
-  useEffect(() => {
-    if (client) {
       handleGetAllPaymentsByClientId()
     }
-  }, [client])
+  }, [])
+
   // Functions
   async function handleGetAllProjectsByClientId() {
     const projectsFetched = await getProjectsByClientID(
@@ -119,24 +118,18 @@ function Dashboard({}: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.dataContainers}>
-        <Text style={styles.text}>פעולות מומלצות</Text>
-        <View style={styles.iconsContainer}>
-          <IconwithText text={"צ'אט מהיר"} iconName={"chatbubble-ellipses"} />
-          <IconwithText text={"מידע אישי"} iconName={"person"} />
-          <IconwithText text={"תשלומים"} iconName={"cash"} />
-          <IconwithText text={"קבצים"} iconName={"file-tray-full"} />
-        </View>
+        <RecommandedActions />
       </View>
       <SectionList
         style={{ paddingBottom: 16 }}
         sections={DATA}
         keyExtractor={(item, index) => item.id + index}
         renderItem={({ item }) => {
-          if ((item as Project).name) {
-            return (
-              <ProjectDashboardPreview projectName={(item as Project).name} />
-            )
-          } else if ((item as Payment).status) {
+          if (item as Project) {
+            return <ProjectDashboardPreview project={item as Project} />
+          } else if (item as Payment) {
+            return <ProjectDashboardPaymentsPreview payment={item as Payment} />
+          } else if (item as Payment) {
             return <ProjectDashboardPaymentsPreview payment={item as Payment} />
           } else {
             return null
@@ -147,20 +140,19 @@ function Dashboard({}: Props) {
         )}
         ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
         ListEmptyComponent={() => <Text>אין פריטים להצגה</Text>}
-        renderSectionFooter={({ section }) => {
-          if (
-            section.title === `הפרוייקטים של ${client?.name}` &&
-            loadingProjects
-          ) {
-            return <ActivityIndicator size="large" color={Colors.purple500} />
-          } else if (
-            section.title === "סטטוס תשלומים שנותרו" &&
-            loadingPayments
-          ) {
-            return <ActivityIndicator size="large" color={Colors.purple500} />
-          } else {
-            return null
-          }
+        renderSectionFooter={(item) => {
+          if (item.section.data.length === 0)
+            return (
+              <Text
+                style={styles.noItemToDisplay}
+              >{`אין ${item.section.type} להצגה`}</Text>
+            )
+          return null
+        }}
+        ListFooterComponent={() => {
+          return (
+            <Text style={styles.sectionTitle}>מענה מהיר לשאלות תשובות</Text>
+          )
         }}
       />
 
@@ -213,10 +205,16 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 }, // iOS shadow offset
     shadowOpacity: 0.25, // iOS shadow opacity
     shadowRadius: 4, // iOS shadow radius
+    marginBottom: 16,
   },
   text: {
     fontSize: 24,
     color: Colors.gray700,
+    fontFamily: "Rubik-Bold",
+  },
+  noItemToDisplay: {
+    fontSize: 16,
+    color: Colors.red500,
     fontFamily: "Rubik-Bold",
   },
 })

@@ -5,7 +5,8 @@ import { Timestamp } from "firebase/firestore"
 export interface Project {
   id: string
   name: string
-  status: "planned" | "in_progress" | "completed"
+  status: "בתהליך אישור" | "בביצוע" | "הושלם"
+  stage: "איפיון" | "עיצוב" | "פיתוח"
   progress: number // 0-100
   clientId: string
   createdAt: Timestamp
@@ -38,11 +39,15 @@ export interface Payment {
   id: string
   projectId: string
   clientId: string
-  amount: number
-  type: "מקדמה" | "סופי"
-  status: "ממתין לתשלום" | "שולם" | "באיחור"
-  dueDate: Timestamp
-  invoiceUrl: string // URL to manually uploaded invoice
+  depositAmount: number
+  despositStatus: "ממתין לתשלום" | "שולם" | "באיחור"
+  despostDueDate: Timestamp
+  despositInvoiceUrl: string
+  fullfillAmount: number
+  fullfillStatus: "ממתין לתשלום" | "שולם" | "באיחור"
+  fullfillDueDate: Timestamp
+  fullfillInvoiceUrl: string
+  totalPay: number
   createdAt: Timestamp
 }
 
