@@ -298,14 +298,11 @@ export async function getPaymentsByProjectId(projectId: string) {
       where("projectId", "==", projectId)
     )
     const querySnapshot = await getDocs(q)
-    const data = {
-      size: querySnapshot.size,
-      data: querySnapshot.docs.map((doc) => doc.data() as Payment),
-    } as { size: number; data: Payment[] }
-    return data
+    const data = querySnapshot.docs.map((doc) => doc.data() as Payment)
+    return data[0]
   } catch (error) {
     console.error("Error getting documents: ", error)
-    return { size: 0, data: [] }
+    return   [] 
   }
 }
 export async function getPaymentById(paymentId: string) {

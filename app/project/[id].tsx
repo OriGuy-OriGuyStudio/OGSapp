@@ -1,8 +1,12 @@
 import { useLocalSearchParams, useNavigation } from "expo-router"
 import React, { useLayoutEffect, useState } from "react"
 import { Pressable, StyleSheet, Text, View } from "react-native"
-import { getProjectById } from "../../src/services/firestoreService"
-import { Project } from "../../src/types/firestoreSchemas"
+import {
+  getPaymentsByClientID,
+  getPaymentsByProjectId,
+  getProjectById,
+} from "../../src/services/firestoreService"
+import { Payment, Project } from "../../src/types/firestoreSchemas"
 import CustomHeader from "../../src/components/CustomHeader"
 import Colors from "../../src/constants/Colors"
 import IconwithText from "../../src/components/IconwithText"
@@ -13,10 +17,13 @@ function Index({}: Props) {
   const { id } = useLocalSearchParams()
   const navigation = useNavigation()
   const [project, setProject] = useState<Project>()
+  const [payment, setPayment] = useState<Payment>()
 
   async function handleGetProject() {
     const project = await getProjectById(id as string)
+    const payment = await getPaymentsByProjectId(id as string)
     setProject(project as Project)
+    setPayment(payment as Payment)
   }
   useLayoutEffect(() => {
     try {
@@ -48,7 +55,12 @@ function Index({}: Props) {
             שלב נוכחי : <Text style={styles.status}>{project?.stage}</Text>{" "}
           </Text>
           <Text style={styles.label}>
-            תשלום שנותר : <Text style={styles.status}>{project?.status}</Text>
+            תשלום שנותר :{" "}
+            <Text style={styles.status}>
+              {(payment?.totalPay as number) -
+                (payment?.depositAmount as number) -
+                (payment?.fullfillAmount as number)} ש"ח
+            </Text>
           </Text>
           <View style={styles.iconsContainer}>
             <IconwithText text={"העלה קבצים"} iconName={"add"} />
