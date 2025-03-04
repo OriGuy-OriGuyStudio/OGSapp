@@ -47,7 +47,7 @@ function Index({}: Props) {
     <View style={styles.container}>
       <View style={styles.dataContainers}>
         <Text style={styles.sectionTitle}>מידע מהיר</Text>
-        <View>
+        <View style={styles.mainProjectDataContaner}>
           <Text style={styles.label}>
             סטטוס הפרוייקט: <Text style={styles.status}>{project?.status}</Text>{" "}
           </Text>
@@ -59,7 +59,8 @@ function Index({}: Props) {
             <Text style={styles.status}>
               {(payment?.totalPay as number) -
                 (payment?.depositAmount as number) -
-                (payment?.fullfillAmount as number)} ש"ח
+                (payment?.fullfillAmount as number)}{" "}
+              ש"ח
             </Text>
           </Text>
           <View style={styles.iconsContainer}>
@@ -83,6 +84,10 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingHorizontal: 24,
   },
+  mainProjectDataContaner: {
+    justifyContent: "flex-end",
+    alignItems:"flex-end"
+  },
   label: {
     fontFamily: "Rubik-Black",
     fontSize: 24,
@@ -96,7 +101,7 @@ const styles = StyleSheet.create({
   },
   iconsContainer: {
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
     marginTop: 16,
     width: "100%",
     gap: 16,
@@ -108,15 +113,15 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: Colors.purple500,
     textAlign: "right",
-    alignSelf: "flex-start",
+    alignSelf: "flex-end",
   },
   dataContainers: {
     backgroundColor: Colors.wy100,
     paddingHorizontal: 24,
     paddingVertical: 16,
-    justifyContent: "flex-start",
-    alignContent: "flex-start",
-    alignItems: "flex-start",
+    justifyContent: "flex-end",
+    alignContent: "flex-end",
+    alignItems: "flex-end",
     borderRadius: 24,
     width: "100%",
     elevation: 4,

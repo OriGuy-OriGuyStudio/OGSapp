@@ -197,7 +197,7 @@ export default Dashboard
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: Colors.wy100,
     paddingTop: 40,
@@ -206,9 +206,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   chatButtonContainer: {
-    // justifyContent: "center",
-    // alignContent: "center",
-    // alignItems: "center",
+    justifyContent: "flex-end",
+    alignContent: "flex-end",
+    alignItems: "flex-end",
   },
   paymentContainer: {
     flexDirection: "row",
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: Colors.purple500,
     textAlign: "right",
-    alignSelf: "flex-start",
+    alignSelf: "flex-end",
   },
   iconsContainer: {
     flexDirection: "row",

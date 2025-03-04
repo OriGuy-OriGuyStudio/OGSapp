@@ -16,8 +16,6 @@ const CustomHeader = ({ title, isDashboard }: Props) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.header}>
-        <FontAwesome5 name="user-edit" size={24} color={Colors.wy100} />
-        <Text style={styles.title}>{title}</Text>
         {isDashboard ? (
           <></>
         ) : (
@@ -25,6 +23,8 @@ const CustomHeader = ({ title, isDashboard }: Props) => {
             <Ionicons name="arrow-back" size={24} color={Colors.wy100} />
           </Pressable>
         )}
+        <Text style={styles.title}>{title}</Text>
+        <FontAwesome5 name="user-edit" size={24} color={Colors.wy100} />
       </View>
     </SafeAreaView>
   )

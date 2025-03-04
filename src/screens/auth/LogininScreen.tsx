@@ -12,6 +12,7 @@ import {
 } from "react-native"
 import { getClientById } from "../../services/firestoreService"
 import {
+  Auth,
   getAuth,
   getReactNativePersistence,
   setPersistence,
@@ -39,6 +40,8 @@ function LogininScreen({}: Props) {
   const handleLogin = async () => {
     try {
       const res = await signInWithEmailAndPassword(auth, email, password)
+      console.log(await res.user.getIdToken())
+
       const client = await getClientById(res.user.uid)
       setClient(client as Client)
       router.replace("/client")
